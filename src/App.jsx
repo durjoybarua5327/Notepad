@@ -1,39 +1,55 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './index.css'
 import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 function App() {
+
   const [todo, setTodo] = useState("")
   const [todos, setTodos] = useState([])
+
+  useEffect(() => {
+    let todostring = localStorage.getItem("todos")
+    if(todostring){
+      let todos= JSON.parse(localStorage.getItem("todos"))
+      setTodos(todos)
+    }
+  }, [])
   
-  const handleEdit = (id) => {
-    if(todo.length>0) {
-      alert("First save the current todo before editing another one.");
+  useEffect(() => {
+    if (todos.length > 0) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
+  }, [todos]);
+  
+  const handleEdit=(e, id)=>{
+    if(todo.length>0){
+      alert("Save first then you can edit")
       return
     }
     let newtodos = todos.filter(item=>{
       return item.id!=id
     })
-    const newtodo= todos.find(item => item.id === id)
-    setTodo(newtodo.todo)
-    
+    const currenttodo = todos.find(item => item.id === id)
+    setTodo(currenttodo.todo)
     setTodos(newtodos)
   }
-
   const handleDelete=(e, id)=>{
-    if(todo.length>0) {
-      alert("First save the current todo before deleting another one.");
-      return
+    if (todo.length > 0) {
+      alert("Save first then you can delete");
+      return;
     }
     const confirmDelete = window.confirm("Are you sure you want to delete this todo?");
     if (confirmDelete) {
-    let newtodos = todos.filter(item=>{
-      return item.id!=id
-    })
-    setTodos(newtodos)
-  }
+      let newTodos = todos.filter(item => item.id !== id);
+      setTodos(newTodos);
+  
+      if (newTodos.length === 0) {
+        localStorage.removeItem("todos");
+      }
+    }
 }
   const handleAdd=()=>{
     if (todo.trim() === "") return;
@@ -72,14 +88,14 @@ function App() {
 
           return <div key={item.id}  className="todo flex my-4  items-center">
             <div className='flex w-[65vw] items-center'>
-            <input name={item.id} onChange={handlecheckbox} value={item.isCompleted} className='mx-2' type="checkbox" />
+            <input name={item.id} onChange={handlecheckbox} checked={item.isCompleted} className='mx-2' type="checkbox" />
             <div className={`${item.isCompleted ? "line-through" : ""} w-[63vw] bg-[#6e7890] p-3 rounded-xl`}>
               {item.todo}
             </div>
             </div>
 
             <div className="buttons flex">
-              <button name={item.id} onClick={() => handleEdit(item.id)}  className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>edit</button>
+              <button name={item.id} onClick={(e)=>{ handleEdit(e, item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>edit</button>
               <button name={item.id} onClick={(e)=>{handleDelete(e,item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>delete</button>
             </div>
           </div>
