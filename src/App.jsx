@@ -1,27 +1,32 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './index.css'
 import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 
 
-
 function App() {
-  const [count, setCount] = useState(0)
-
   const [todo, setTodo] = useState("")
   const [todos, setTodos] = useState([])
-
-  const handleEdit=(e, id)=>{
-    let t =todos.filter(item=>item.id === id)
-    setTodo(t[0].todo)
+  
+  const handleEdit = (id) => {
+    if(todo.length>0) {
+      alert("First save the current todo before editing another one.");
+      return
+    }
     let newtodos = todos.filter(item=>{
       return item.id!=id
     })
+    const newtodo= todos.find(item => item.id === id)
+    setTodo(newtodo.todo)
+    
     setTodos(newtodos)
   }
+
   const handleDelete=(e, id)=>{
+    if(todo.length>0) {
+      alert("First save the current todo before deleting another one.");
+      return
+    }
     const confirmDelete = window.confirm("Are you sure you want to delete this todo?");
     if (confirmDelete) {
     let newtodos = todos.filter(item=>{
@@ -74,7 +79,7 @@ function App() {
             </div>
 
             <div className="buttons flex">
-              <button name={item.id} onClick={(e)=>{ handleEdit(e, item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>edit</button>
+              <button name={item.id} onClick={() => handleEdit(item.id)}  className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>edit</button>
               <button name={item.id} onClick={(e)=>{handleDelete(e,item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>delete</button>
             </div>
           </div>
