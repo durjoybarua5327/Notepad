@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className='flex justify-between items-center bg-[#302983]  w-100vw] sticky top-0 text-white py-4'>
+    <nav className='flex justify-between items-center bg-[#302983]  w-100vw] sticky top-0 z-10 text-white py-4'>
       <div className='logo'>
         <span className='font-bold text-3xl mx-8'>myTask</span>
       </div>
