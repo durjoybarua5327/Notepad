@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import './index.css'
 import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
+function Home() {
+  return <div className="text-center text-2xl font-bold my-10">Welcome to myTask!</div>;
+}
 
-
-function App() {
-
+function Tasks() {
   const [todo, setTodo] = useState("")
   const [todos, setTodos] = useState([])
 
@@ -73,7 +75,6 @@ function App() {
   }
   return (
     <>
-    <Navbar/>
       <div className="container py-5 px-10 mx-auto text-black my-5 bg-[#9594a9] w-[80vw] min-h-[70vh] rounded-xl">
         <div className="addtodo">
           <h2 className='text-lg font-bold'>Add a todo</h2>
@@ -93,7 +94,6 @@ function App() {
               {item.todo}
             </div>
             </div>
-
             <div className="buttons flex">
               <button name={item.id} onClick={(e)=>{ handleEdit(e, item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>edit</button>
               <button name={item.id} onClick={(e)=>{handleDelete(e,item.id)}} className='bg-violet-800 h-8 py-1 px-4 rounded-md mx-2 cursor-pointer text-sm font-bold hover:bg-violet-900'>delete</button>
@@ -105,5 +105,15 @@ function App() {
     </>
   )
 }
-
+function App() {
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/tasks" element={<Tasks />} />
+      </Routes>
+    </Router>
+  );
+}
 export default App
