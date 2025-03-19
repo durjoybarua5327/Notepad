@@ -29,7 +29,15 @@ function Home() {
 function Tasks() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-
+  const [selectedTodo, setSelectedTodo] = useState(null);
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setSelectedTodo(null);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+  
   useEffect(() => {
     let todostring = localStorage.getItem("todos");
     if (todostring) {
@@ -134,14 +142,16 @@ function Tasks() {
           )}
           {todos.map((item) => (
             <div
-              key={item.id}
-              className="todo group flex my-3 items-center bg-white p-4 rounded-xl transition-all duration-200 hover:shadow-md border border-indigo-50 hover:border-indigo-100"
-            >
+  key={item.id}
+  className="todo group flex my-3 items-center bg-white p-4 rounded-xl transition-all duration-200 hover:shadow-md border border-indigo-50 hover:border-indigo-100 cursor-pointer"
+  onClick={() => setSelectedTodo(item)}
+>
               <div className="flex w-[65vw] items-center">
                 <input
                   name={item.id}
                   onChange={handlecheckbox}
                   checked={item.isCompleted}
+                  onClick={(e) => e.stopPropagation()}
                   className="mx-2 w-5 h-5 text-indigo-600 border-2 border-indigo-300 rounded-md focus:ring-indigo-500 cursor-pointer"
                   type="checkbox"
                 />
@@ -175,6 +185,27 @@ function Tasks() {
           ))}
         </div>
       </div>
+      {selectedTodo && (
+  <div 
+    className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center z-50"
+    onClick={(e) => e.target === e.currentTarget && setSelectedTodo(null)}
+  >
+    <div className="bg-indigo-50 p-8 rounded-2xl max-w-2xl w-[90%] relative animate-scale-in max-h-[80vh] overflow-y-auto border border-indigo-200 shadow-lg shadow-indigo-100/50">
+      <button 
+        onClick={() => setSelectedTodo(null)}
+        className="sticky top-0 right-4 float-right text-indigo-400 hover:text-indigo-600 transition-colors bg-indigo-50 rounded-full p-1 -mt-2 -mr-2 z-10"
+      >
+        ✕
+      </button>
+      <h3 className="text-2xl font-bold text-indigo-800 mb-4 sticky top-0 bg-indigo-50 pt-2">
+        Todo Details
+      </h3>
+      <div className="text-indigo-800 text-lg whitespace-pre-wrap break-words pb-4 pr-4">
+        {selectedTodo.todo}
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }
