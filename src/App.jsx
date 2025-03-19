@@ -125,7 +125,7 @@ function Tasks() {
                 e.target.style.height = `${Math.min(
                   e.target.scrollHeight,
                   192
-                )}px`; 
+                )}px`;
               }}
             />
 
@@ -161,11 +161,10 @@ function Tasks() {
                   type="checkbox"
                 />
                 <div
-                  className={`${
-                    item.isCompleted
-                      ? "line-through text-gray-400"
-                      : "text-indigo-800"
-                  } w-[63vw] p-3 ml-2 text-lg font-medium transition-all duration-200`}
+                  className={`${item.isCompleted
+                    ? "line-through text-gray-400"
+                    : "text-indigo-800"
+                    } w-[63vw] p-3 ml-2 text-lg font-medium transition-all duration-200`}
                 >
                   {item.todo}
                 </div>
@@ -194,37 +193,37 @@ function Tasks() {
         </div>
       </div>
       {selectedTodo && (
-  <div
-    className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center z-50"
-    onClick={(e) => e.target === e.currentTarget && setSelectedTodo(null)}
-  >
-    <div className="bg-indigo-50 p-8 rounded-2xl max-w-2xl w-[90%] relative animate-scale-in max-h-[80vh] overflow-y-auto border border-indigo-200 shadow-lg shadow-indigo-100/50">
-      <div className="flex justify-between items-center sticky top-0 bg-indigo-50 pt-2 pb-2 z-10">
-        <h3 className="text-2xl font-bold text-indigo-800">Todo Details</h3>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(selectedTodo.todo);
-              alert("Copied to clipboard!");
-            }}
-            className="px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-sm"
-          >
-            Copy Note
-          </button>
-          <button
-            onClick={() => setSelectedTodo(null)}
-            className="text-indigo-400 hover:text-indigo-600 transition-colors bg-indigo-50 rounded-full p-1"
-          >
-            ✕
-          </button>
+        <div
+          className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center z-50"
+          onClick={(e) => e.target === e.currentTarget && setSelectedTodo(null)}
+        >
+          <div className="bg-indigo-50 p-8 rounded-2xl max-w-2xl w-[90%] relative animate-scale-in max-h-[80vh] overflow-y-auto border border-indigo-200 shadow-lg shadow-indigo-100/50">
+            <div className="flex justify-between items-center sticky top-0 bg-indigo-50 pt-2 pb-2 z-10">
+              <h3 className="text-2xl font-bold text-indigo-800">Todo Details</h3>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(selectedTodo.todo);
+                    alert("Copied to clipboard!");
+                  }}
+                  className="px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-sm"
+                >
+                  Copy Note
+                </button>
+                <button
+                  onClick={() => setSelectedTodo(null)}
+                  className="text-indigo-400 hover:text-indigo-600 transition-colors bg-indigo-50 rounded-full p-1"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+            <div className="text-indigo-800 text-lg whitespace-pre-wrap break-words pb-4 pr-4">
+              {selectedTodo.todo}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="text-indigo-800 text-lg whitespace-pre-wrap break-words pb-4 pr-4">
-        {selectedTodo.todo}
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
 
     </>
