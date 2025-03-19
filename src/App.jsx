@@ -13,7 +13,7 @@ function Home() {
 
       <div className="relative space-y-8 text-center max-w-2xl">
         <h1 className="h-[20vh] text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-fade-in-down">
-          Welcome to myTask!
+          Welcome to myNote!
         </h1>
 
         <Link to="/tasks">
@@ -32,12 +32,12 @@ function Tasks() {
   const [selectedTodo, setSelectedTodo] = useState(null);
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape') setSelectedTodo(null);
+      if (e.key === "Escape") setSelectedTodo(null);
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, []);
-  
+
   useEffect(() => {
     let todostring = localStorage.getItem("todos");
     if (todostring) {
@@ -106,29 +106,34 @@ function Tasks() {
       <div className="container py-8 px-6 mx-auto my-5 bg-indigo-50 w-[80vw] min-h-[70vh] rounded-2xl shadow-xl">
         <div className="addtodo mb-10">
           <h2 className="text-2xl font-bold text-indigo-900 mb-4">
-            Add a Todo
+            Add Your Notes
           </h2>
           <div className="flex gap-4">
             <textarea
               onChange={handlechange}
               value={todo}
-              className="w-full px-6 py-3 rounded-lg bg-white border-2 border-indigo-100 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition-all duration-200 placeholder:text-indigo-300 resize-none overflow-hidden"
+              className="w-full px-6 py-3 rounded-lg bg-white border-2 border-indigo-100 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition-all duration-200 placeholder:text-indigo-300 resize-none overflow-auto"
               placeholder="What needs to be done?"
               rows="1"
               style={{
                 minHeight: "3rem",
                 maxHeight: "12rem",
+                overflowY: "auto",
               }}
               onInput={(e) => {
                 e.target.style.height = "auto";
-                e.target.style.height = e.target.scrollHeight + "px";
+                e.target.style.height = `${Math.min(
+                  e.target.scrollHeight,
+                  192
+                )}px`; 
               }}
             />
+
             <button
               onClick={handleAdd}
               className="bg-indigo-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 shadow-md hover:shadow-indigo-200"
             >
-              Add Task
+              Add Note
             </button>
           </div>
         </div>
@@ -142,10 +147,10 @@ function Tasks() {
           )}
           {todos.map((item) => (
             <div
-  key={item.id}
-  className="todo group flex my-3 items-center bg-white p-4 rounded-xl transition-all duration-200 hover:shadow-md border border-indigo-50 hover:border-indigo-100 cursor-pointer"
-  onClick={() => setSelectedTodo(item)}
->
+              key={item.id}
+              className="todo group flex my-3 items-center bg-white p-4 rounded-xl transition-all duration-200 hover:shadow-md border border-indigo-50 hover:border-indigo-100 cursor-pointer"
+              onClick={() => setSelectedTodo(item)}
+            >
               <div className="flex w-[65vw] items-center">
                 <input
                   name={item.id}
@@ -165,7 +170,10 @@ function Tasks() {
                   {item.todo}
                 </div>
               </div>
-              <div className="buttons flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="buttons flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
                 <button
                   name={item.id}
                   onClick={(e) => handleEdit(e, item.id)}
@@ -186,26 +194,39 @@ function Tasks() {
         </div>
       </div>
       {selectedTodo && (
-  <div 
+  <div
     className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center z-50"
     onClick={(e) => e.target === e.currentTarget && setSelectedTodo(null)}
   >
     <div className="bg-indigo-50 p-8 rounded-2xl max-w-2xl w-[90%] relative animate-scale-in max-h-[80vh] overflow-y-auto border border-indigo-200 shadow-lg shadow-indigo-100/50">
-      <button 
-        onClick={() => setSelectedTodo(null)}
-        className="sticky top-0 right-4 float-right text-indigo-400 hover:text-indigo-600 transition-colors bg-indigo-50 rounded-full p-1 -mt-2 -mr-2 z-10"
-      >
-        ✕
-      </button>
-      <h3 className="text-2xl font-bold text-indigo-800 mb-4 sticky top-0 bg-indigo-50 pt-2">
-        Todo Details
-      </h3>
+      <div className="flex justify-between items-center sticky top-0 bg-indigo-50 pt-2 pb-2 z-10">
+        <h3 className="text-2xl font-bold text-indigo-800">Todo Details</h3>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(selectedTodo.todo);
+              alert("Copied to clipboard!");
+            }}
+            className="px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-sm"
+          >
+            Copy Note
+          </button>
+          <button
+            onClick={() => setSelectedTodo(null)}
+            className="text-indigo-400 hover:text-indigo-600 transition-colors bg-indigo-50 rounded-full p-1"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
       <div className="text-indigo-800 text-lg whitespace-pre-wrap break-words pb-4 pr-4">
         {selectedTodo.todo}
       </div>
     </div>
   </div>
 )}
+
+
     </>
   );
 }

@@ -6,7 +6,7 @@ function Navbar() {
     <nav className='flex justify-between items-center bg-gradient-to-r from-indigo-800 to-blue-900 w-full sticky top-0 z-10 text-white py-4 px-6 shadow-xl border-b border-indigo-200/20'>
       <div className='logo flex items-center'>
         <span className='font-bold text-3xl ml-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-amber-500 font-mono tracking-tighter'>
-          myTask
+          iNote
         </span>
       </div>
       <ul className='flex gap-12 mr-8'>
@@ -33,7 +33,7 @@ function Navbar() {
                 "hover:text-amber-200 hover:scale-105 text-gray-200"
               }`
             }>
-            Your tasks
+            Your Notes
           </NavLink>
         </li>
       </ul>
