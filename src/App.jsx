@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="h-[100vh] bg-gradient-to-br from-indigo-50 to-blue-100 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+    <div className="h-[90vh] bg-gradient-to-br from-indigo-50 to-blue-100 flex flex-col items-center justify-center p-8 relative overflow-hidden">
       <div className="absolute top-20 left-20 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
       <div className="absolute top-40 right-32 w-48 h-48 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animate-delay-2000"></div>
       <div className="absolute bottom-32 left-32 w-48 h-48 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animate-delay-[4000ms]"></div>
@@ -101,12 +101,20 @@ function Tasks() {
             Add a Todo
           </h2>
           <div className="flex gap-4">
-            <input
+            <textarea
               onChange={handlechange}
               value={todo}
-              className="w-full px-6 py-3 rounded-lg bg-white border-2 border-indigo-100 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition-all duration-200 placeholder:text-indigo-300"
-              type="text"
+              className="w-full px-6 py-3 rounded-lg bg-white border-2 border-indigo-100 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition-all duration-200 placeholder:text-indigo-300 resize-none overflow-hidden"
               placeholder="What needs to be done?"
+              rows="1"
+              style={{
+                minHeight: "3rem",
+                maxHeight: "12rem",
+              }}
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                e.target.style.height = e.target.scrollHeight + "px";
+              }}
             />
             <button
               onClick={handleAdd}
@@ -121,7 +129,7 @@ function Tasks() {
         <div className="todos">
           {todos.length === 0 && (
             <div className="text-center py-8 text-indigo-400 text-lg">
-              ✨ No tasks found. Add your first todo!
+              ✨ No tasks found. Add your first task!
             </div>
           )}
           {todos.map((item) => (
