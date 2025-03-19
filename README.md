@@ -10,7 +10,6 @@
 - ✅ **Mark as Completed**: Check off completed notes.
 - 📋 **Copy Notes**: Easily copy note content to the clipboard.
 - 💾 **Local Storage Support**: Notes persist even after refreshing the page.
-- 🎨 **Beautiful UI**: Responsive design with smooth animations.
 
 ## Tech Stack
 - **Frontend:** React.js
