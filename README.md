@@ -34,11 +34,11 @@ Ensure you have **Node.js** and **npm** installed on your machine.
    ```
 3. Start the development server:
    ```sh
-   npm start
+   npm run dev
    ```
 4. Open the app in your browser:
    ```
-   http://localhost:3000
+   http://localhost:5173/
    ```
 
 ## Project Structure
