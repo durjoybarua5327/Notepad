@@ -13,7 +13,7 @@ function Home() {
 
       <div className="relative space-y-8 text-center max-w-2xl">
         <h1 className="h-[20vh] text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-fade-in-down">
-          Welcome to myNote!
+          Welcome to iNote!
         </h1>
 
         <Link to="/tasks">
