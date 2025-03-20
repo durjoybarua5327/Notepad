@@ -1,5 +1,5 @@
 import React from 'react'
-
+ import { Link } from 'react-router-dom'
 const Home = () => {
     return (
         <div className="h-[90vh] bg-gradient-to-br from-indigo-50 to-blue-100 flex flex-col items-center justify-center p-8 relative overflow-hidden">
@@ -11,9 +11,12 @@ const Home = () => {
                 <h1 className="h-[20vh] text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent animate-fade-in-down">
                   Welcome to iNote!
                 </h1>
-                  <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-purple-200 active:scale-95">
+                <Link to="/tasks" >
+                <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-purple-200 active:scale-95">
                     Get Started
                   </button>
+                </Link>
+                
               </div>
             </div>
       )

@@ -1,20 +1,33 @@
 import "./index.css";
 import React from "react";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./components/home";
+import Home from "./components/Home";
 import Tasks from "./components/Tasks";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        <Navbar />
+        <Home />
+      </>
+    ),
+  },
+  {
+    path: "/Tasks",
+    element: (
+      <>
+        <Navbar />
+        <Tasks />
+      </>
+    ),
+  },
+]);
 
 function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tasks" element={<Tasks />} />
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }
+
 export default App;

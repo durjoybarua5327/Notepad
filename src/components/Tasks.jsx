@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 const Tasks = () => {
     const [todo, setTodo] = useState("");
